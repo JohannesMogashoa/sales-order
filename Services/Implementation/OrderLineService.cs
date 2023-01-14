@@ -40,7 +40,7 @@ namespace SalesOrder.Services.Implementation
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("New orderline created");
 
-                return $"/Home/Orders/{id}";
+                return $"/Home/Order/{id}";
             }
             return "/Home/Orders";
         }
@@ -54,7 +54,7 @@ namespace SalesOrder.Services.Implementation
             await _context.SaveChangesAsync();
             _logger.LogInformation($">>>>> Order Line, id: {orderLine.Id}, deleted!");
 
-            return $"/Home/Orders/{orderLine.OrderHeader.Id}";
+            return $"/Home/Order/{orderLine.OrderHeader.Id}";
         }
 
         public async Task<string> UpdateOrderLineAsync(EditOrderLine orderLine)
@@ -71,7 +71,7 @@ namespace SalesOrder.Services.Implementation
             await _context.SaveChangesAsync();
             _logger.LogInformation($">>>>> Order Line, id:  {_orderLine.Id}, updated! <<<<<");
 
-            return $"/Home/Orders/{_orderLine.OrderHeader.Id}";
+            return $"/Home/Order/{_orderLine.OrderHeader.Id}";
         }
 
         private static int GetOrderLineNumber(int currentLines)

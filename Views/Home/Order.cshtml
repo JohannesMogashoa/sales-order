@@ -9,6 +9,7 @@
 <section>
     <section class="d-flex justify-content-between align-items-center mb-5">
         <h1>#@Model.OrderNumber</h1>
+        <partial name="OrderLineSearchPartial" />
         @if (SignInManager.IsSignedIn(User)) {
             <a class="btn btn-success"
                asp-area="" asp-controller="OrderLines"

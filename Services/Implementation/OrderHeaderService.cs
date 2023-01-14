@@ -70,7 +70,7 @@ namespace SalesOrder.Services.Implementation
         {
             var orderHeader = _context.OrderHeaders
                 .Where(oH => oH.Id.Equals(id) && oH.Archived == false)
-                .Include(oH => oH.OrderLines.Where(oL => oL.Archived == false))
+                .Include(oH => oH.OrderLines.Where(oL => oL.Archived == false).OrderBy(oL => oL.LineNumber))
                 .FirstOrDefault();
 
             return orderHeader;

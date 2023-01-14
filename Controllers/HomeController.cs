@@ -40,17 +40,38 @@ namespace SalesOrder.Controllers
             return View();
         }
 
-        public IActionResult Orders()
+        public IActionResult Orders(string orderNumberSearch, string orderType, string dateFrom, string dateTo)
         {
             List<OrderHeader> orderHeaders = _headerService.GetOrderHeaders();
+
+            if (!String.IsNullOrEmpty(orderNumberSearch))
+            {
+                orderHeaders = orderHeaders.Where(o => o.OrderNumber == orderNumberSearch).ToList();
+            }
+
+            if(!String.IsNullOrEmpty(orderType))
+            {
+                orderHeaders = orderHeaders.Where(o => o.OrderType == (OrderType) Enum.Parse(typeof(OrderType), orderType)).ToList();
+            }
+
+            if(!String.IsNullOrEmpty(dateFrom) && !String.IsNullOrEmpty(dateTo))
+            {
+                orderHeaders = orderHeaders.Where(o => (o.OrderCreated >= DateTime.Parse(dateFrom) && o.OrderCreated <= DateTime.Parse(dateTo))).ToList();
+            }
 
             return View(orderHeaders);
         }
 
-        [HttpGet("/Home/Orders/{id}")]
-        public IActionResult Order([FromRoute] string id)
+        public IActionResult Order([FromRoute] string id, string code)
         {
+            ViewBag.Id = id;
+
             OrderHeader order = _headerService.GetOrderHeader(id);
+
+            if(!String.IsNullOrEmpty(code))
+            {
+                order.OrderLines = order.OrderLines.Where(oL => oL.ProductCode == code).ToList();
+            }
 
             return View(order);
         }

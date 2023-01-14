@@ -1,0 +1,10 @@
+﻿<form asp-action="Order" asp-route-id="@ViewBag.Id" method="get">
+    <div class="d-flex align-items-end justify-content-evenly">
+        <div class="me-4 input-group">
+            <span class="input-group-text">Find by Product Code:</span>
+            <input type="text" name="code" class="form-control" />
+        </div>
+        <input type="submit" class="btn btn-secondary me-3" />
+        <a asp-action="Order" asp-route-id="@ViewBag.Id" class="btn btn-outline-success">Clear</a>
+    </div>
+</form>

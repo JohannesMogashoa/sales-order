@@ -1,0 +1,29 @@
+﻿<form asp-action="Orders" method="get">
+    <p class="fs-3">Find by </p>
+    <div class="d-flex align-items-end justify-content-evenly">
+        <div class="me-4">
+            <label>Order Number:</label>
+            <input type="text" name="orderNumberSearch" class="form-control" />
+        </div>
+        <div class="me-4">
+            <label>Order Type:</label>
+            <select name="orderType" class="form-control">
+                <option value=""></option>
+                @foreach (var type in Html.GetEnumSelectList<OrderType>())
+                {
+                    <option value="@type.Value">@Enum.GetName(typeof(OrderType), int.Parse(type.Value))</option>
+                }
+            </select>
+        </div>
+        <div class="me-4">
+            <label>Date From:</label>
+            <input type="datetime-local" class="form-control" name="dateFrom" value="@DateTime.Now">
+        </div>
+        <div class="me-4">
+            <label>Date To:</label>
+            <input type="datetime-local" class="form-control" name="dateTo" value="@DateTime.Now">
+        </div>
+        <input type="submit" class="btn btn-secondary me-3" />
+        <a asp-action="Orders" class="btn btn-outline-success">Clear</a>
+    </div>
+</form>
