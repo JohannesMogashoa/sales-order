@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Create Order";
+}
+@model CreateOrderHeader
+
+<h1>Orders Admin</h1>
+
+<form asp-controller="OrderHeaders" asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="OrderNumber" class="form-label">Order Number</label>
+                <input type="text" class="form-control" asp-for="OrderNumber" placeholder="SO625144">
+                <span asp-validation-for="OrderNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="OrderType" class="form-label">Order Type</label>
+                <select asp-for="OrderType" asp-items="Html.GetEnumSelectList<OrderType>()" class="form-control"></select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="OrderStatus" class="form-label">Order Status</label>
+                <select asp-for="OrderStatus" asp-items="Html.GetEnumSelectList<OrderStatus>()" class="form-control"></select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="OrderCreated" class="form-label">Order Created</label>
+                <input type="datetime-local" class="form-control" asp-for="OrderCreated" value="@DateTime.Now">
+                <span asp-validation-for="OrderCreated" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="mb-3">
+                <label asp-for="CustomerName" class="form-label">Customer Name</label>
+                <input type="text" class="form-control" asp-for="CustomerName" placeholder="John Doe">
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer py-4 d-flex">
+        <div class="mr-auto"></div>
+        <button class="btn btn-lg btn-primary" type="submit">Create</button>
+    </div>
+</form>

@@ -1,0 +1,12 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>The image below is being pulled in from this API: https://dog.ceo/dog-api.</p>
+    <div class="w-50 h-50 mx-auto">
+        <img class="w-100" src="@Model.Message" alt="Random Dog Image from API" />
+    </div>
+</div>

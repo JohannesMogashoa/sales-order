@@ -1,0 +1,31 @@
+﻿@model List<IdentityUser>
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<section>
+    <section class="d-flex w-100 align-items-center">
+        <h1 class="me-auto"s>Manage Users</h1>
+        <a class="btn btn-success" asp-area="" asp-controller="Users" asp-action="CreateUser" title="Create">Create User</a>
+    </section>
+    <hr role="presentation" />
+    <section>
+        <table class="w-100">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>User Emails</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</section>

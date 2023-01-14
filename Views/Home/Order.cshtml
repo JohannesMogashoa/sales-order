@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model OrderHeader
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<section>
+    <section class="d-flex justify-content-between align-items-center mb-5">
+        <h1>#@Model.OrderNumber</h1>
+        @if (SignInManager.IsSignedIn(User)) {
+            <a class="btn btn-success"
+               asp-area="" asp-controller="OrderLines"
+               asp-action="AddOrderLine"
+               asp-route-id="@Model.Id"
+               title="Add order line">
+                Add Order Line
+            </a>
+        }
+    </section>
+    <section class=row>
+        <div class="col-md-6">
+            <p class="row">
+                <span class="fw-bold col-6">Customer Name:</span> 
+                <span class="col-6">@Model.CustomerName</span>
+            </p>
+            <p class="row">
+                <span class="fw-bold col-6">Order Type:</span>
+                <span class="col-6">@Model.OrderType</span>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <p class="row">
+                <span class="fw-bold col-6">Order Number:</span>
+                <span class="col-6">@Model.OrderCreated.ToString()</span>
+            </p>
+            <p class="row">
+                <span class="fw-bold col-6">Order Number:</span>
+                <span class="col-6">@Model.OrderStatus</span>
+            </p>
+        </div>
+    </section>
+    <hr role="presentation" />
+    <h3>Order Lines</h3>
+    @if(Model.OrderLines.Count > 0) {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Line Number</th>
+                    <th scope="col">Product Code</th>
+                    <th scope="col">Product Type</th>
+                    <th scope="col">Product Cost Price</th>
+                    <th scope="col">Product Sale Price</th>
+                    <th scope="col">Quantity</th>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <th></th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var orderLine in Model.OrderLines)
+                {
+                    <tr>
+                        <th scope="row">@orderLine.LineNumber</th>
+                        <td scope="row">@orderLine.ProductCode</td>
+                        <td scope="row">@orderLine.ProductType</td>
+                        <td scope="row">@orderLine.ProductCostPrice</td>
+                        <td scope="row">@orderLine.ProductSalesPrice</td>
+                        <td scope="row">@orderLine.Quantity</td>
+                        @if (SignInManager.IsSignedIn(User)) {
+                            <th scope="row">
+                                <a asp-controller="OrderLines" asp-action="EditOrderLine" title="Edit" asp-route-id="@orderLine.Id" class="btn p-0 me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                    </svg>
+                                </a>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteOrderLineModal-@orderLine.Id" class="btn p-0" title="Delete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                    </svg>
+                                </button>
+                            </th>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</section>
+
+@if (Model.OrderLines.Count > 0)
+{
+    foreach (var orderLine in Model.OrderLines)
+    {
+        <partial name="_DeleteOrderLinePartial" model="@ModelHelpers.GetEditOrderLine(orderLine)" />
+    }
+}
