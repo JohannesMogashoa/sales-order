@@ -7,19 +7,14 @@
 }
 
 <section>
-    <!-- TODO: Add Searchable for Header by OrderHeader, OrderType, CreateDate Filter-->
-    <section class="d-flex w-100 align-items-start mb-5">
+    <section class="w-100 mb-5">
         <partial name="OrderHeaderSearchPartial" />
-        @if (SignInManager.IsSignedIn(User)) {
-            <div class="mx-auto"></div>
-            <a class="btn btn-success" asp-area="" asp-controller="OrderHeaders" asp-action="Create" title="Create">Create Order</a>
-        }
     </section>
 
     <section>
         @if (Model.Count > 0)
         {
-            <table class="table">
+            <table class="table table-borderless table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

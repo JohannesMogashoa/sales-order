@@ -3,8 +3,8 @@
 }
 @model EditOrderHeader
 
-<h1>Orders Admin</h1>
-
+<h3 class="my-4">Editing: @Model.OrderNumber</h3>
+<hr />
 <form asp-controller="OrderHeaders" asp-action="Edit" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input hidden asp-for="Id" />
@@ -43,8 +43,8 @@
             </div>
         </div>
     </div>
-    <div class="modal-footer py-4 d-flex">
-        <div class="mr-auto"></div>
-        <button class="btn btn-lg btn-primary" type="submit">Edit</button>
+    <div class="d-flex justify-content-end">
+        <a asp-controller="Home" asp-action="Orders" class="btn btn-danger me-4">Cancel</a>
+        <button class="btn btn-success" type="submit">Edit</button>
     </div>
 </form>
